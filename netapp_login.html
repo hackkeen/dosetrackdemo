@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<html class="W03  ltr no-js" dir="ltr" lang="en-US">
+<head>
+ <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <title>NetApp Login Page</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/ssologinext/images/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="/ssologinext/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/ssologinext/images/netapp-logo-58x67.png" rel="image_src">
+    <link href="/ssologinext/stylesheets/unique/login/login.css" media="all" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+    <link href="/ssologinext/stylesheets/unique/login/fonts.css" rel="stylesheet" type="text/css"> 
+<script src="/ssologinext/js/common.js"></script>
+<!--IdcClientLoginForm=1-->
+<SCRIPT language=JavaScript type=text/javascript>var loginAttempt=1;</script>
+   <script src="/ssologinext/js/jquery.min.js"></script>
+    <script>
+      $(function () { 
+        $('input[type="checkbox"]:not(:checked)').click(function() {
+          $(this).toggleClass("checked", this.checked);
+        }); 
+      });
+    </script>
+    <script>
+      //google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','/ssologinext/js/analytics.js','ga');
+      
+      if(location.host=="signin.netapp.com") {
+          ga('create', 'UA-3177638-5', 'auto');
+      }
+      else {
+          ga('create', 'UA-49436032-1', 'auto');
+      }
+      ga('send', 'pageview');
+    </script>
+    <script src="/ssologinext/js/omniture.js"></script>
+    <script src="/ssologinext/js/s_code.js"></script>
+</head>
+  <body class="login" role="document">
+<!-- Function to trigger form submission by pressing "Enter" -->
+                <SCRIPT language=JavaScript type=text/javascript>
+                       // used to detect whether login is through Mobile or tablet device
+isMobile = 0;
+autoFill = false;
+
+function set_cookie ( name, value, exp_y, exp_m, exp_d, path, domain, secure )
+{
+    var cookie_string = name + "=" + escape ( value );
+    if ( exp_y )
+    {
+        var expires = new Date ( exp_y, exp_m, exp_d );
+        cookie_string += "; expires=" + expires.toGMTString();
+    }
+    if ( path )
+        cookie_string += "; path=" + escape ( path );
+    if ( domain )
+        cookie_string += "; domain=" + escape ( domain );
+    if ( secure )
+        cookie_string += "; secure";
+    document.cookie = cookie_string;
+}
+
+function get_cookie ( cookie_name )
+{
+    var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+    if ( results )
+        return ( unescape ( results[2] ) );
+    else
+        return null;
+}
+
+function del_cookie(name)
+{
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+                        detectIsMobile();
+                        removeOtherElements();
+                        defaultFocus();
+                        detectIOSMobile();
+function rememberUser()
+{
+	
+        var codeElmnt = document.getElementById('username');
+        var uname = codeElmnt.value;
+        autoFill = document.getElementById("remUID").checked;
+        if (autoFill==true)
+        {
+                        set_cookie ( "alwaysRemember", uname, 2022, 12, 25, "", "", "" );
+                        set_cookie ( "rememberFlag", 1, "", "", "", "", "", "" );
+        }
+
+                        else
+                        {
+                                        var rem_flag = get_cookie ( "rememberFlag" );
+                                        if (rem_flag!=null)
+                                        {
+                                                        del_cookie("rememberFlag");
+                                        }
+                                        var per_uid = get_cookie ( "alwaysRemember" );
+                                        if (per_uid!=null)
+                                        {
+                                                        del_cookie("alwaysRemember");
+                                        }
+                        }
+}
+
+function detectIsMobile()
+{
+                if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)))
+                {
+                                // detect iOS devices
+                                isMobile = 1;
+                }
+                else if((navigator.userAgent.match(/Android/i)) || ((navigator.userAgent.match(/Mobile/i)) && (!(navigator.userAgent.match(/iPad/i)))) )
+                {
+                                // detect android devices
+                                isMobile = 1;
+                }
+                //else if((navigator.userAgent.match(/BlackBerry.*/)))
+                else if((navigator.userAgent.match(/BlackBerry/i)) || navigator.userAgent.match(/PlayBook/i))
+                {
+                                isMobile = 1;
+                }
+                // for unit testing
+                //isMobile = 1;
+}
+function detectIOSMobile()
+{
+                if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) ||(navigator.userAgent.match(/iPad/i)))
+                {
+                             //Hide Rememberme checkbox  
+		  document.getElementById("hideOnIOS").style.visibility="hidden";
+                }
+				else
+                {
+                     
+				//Show Rememberme checkbox	  
+                }
+                
+}
+function removeOtherElements()
+{
+        var currPage = document.URL;
+        if((currPage=="https://signin-test.netapp.com/ssologinext/login.jsp")||(currPage=="http://vmwidmldap1-dev.corp.netapp.com:14100/ssologinext/login.jsp")||(currPage=="http://vmwidmldap2-dev.corp.netapp.com:14100/ssologinext/login.jsp"))
+        {
+                showErrorPage();
+        }
+        else
+        {
+                if (isMobile == 1)
+                {
+                        showMobilePage();
+                }
+                else
+                {
+                        showDesktopPage();
+                }
+        }
+}
+
+function doSubmit(e)
+{
+        if (navigator.appName.substring(0,8) == "Netscape" && navigator.appVersion.substring(0,1) <= "4")
+        {
+                if (e.which==13)
+                {
+                        /*confirm("UID: "+document.forms[0].user.value+" PWD: "+document.forms[0].password.value);*/
+                        alert(forms[0]);
+                        document.forms[0].submit();
+                }
+        }
+}
+
+        function showMobilePage()
+        {
+        	 document.write('<div class="loginBox"><div class="container1 wireBlock"> \
+        			 <div class="wrapper"><header><div class="logo"><img src="/ssologinext/images/horizontal-logo.png"></div> \
+        			 </header> <section><h1 class="loginTitle">Login to <span class="highlight">Continue</span></h1><p style="margin-top:-17px;"> \
+        			 Cookies must be enabled.</p></section></div></div><div class="container2 wireBlock"><div class="wrapper"><div class="loginForm"> \
+        			  \
+        			            <form NAME="Login" METHOD="POST" ACTION="/oam/server/auth_cred_submit">\
+        			            <INPUT name=action type=hidden value=login>\
+        			              <div class="formGroup">\
+        			                <label for="username">Username:</label>\
+        			                <input  autofocus class="formControl" type="text" name="username" id="username" style="border :1px solid #c3c3c3" />\
+        			              </div>\
+        			              <div class="formGroup">\
+        			                <label for="password">Password:</label>\
+        			                <input onKeyUp=doSubmit(event) id="password" name="password" type="password" class="formControl" style="border :1px solid #c3c3c3" />\
+        			              </div>\
+        			              <div id="hideOnIOS">\
+        			                <input id="remUID" name="remUID" type="checkbox" value="1"  onclick="rememberUser();"> \
+        			                <label for="remUID">Remember username</label>\
+        			              </div>\
+        			              <input class="button" type="submit" value="Sign In" onclick="rememberUser();javascript:submitSearch(\'Login\'); return false;" style="margin-top: 18px;"> \
+        			              <div class="loginHelp">\
+        						  <p style="padding-bottom:10px"></p>\
+        			                <p>\
+        			                  <a href="https://mysupport.netapp.com/eservice/public/webreg/RemindMePassword.jsp">\
+        			                   Forgot username or password?\
+        			                  </a>\
+        			                </p>\
+        			              <p>\
+        			                  Not registered?\
+        			                  <a href="https://mysupport.netapp.com/eservice/public/now.do">\
+        			                    Sign up now!\
+        			                  </a>\
+        			                </p>\
+        			              </div>\
+        			              </form>\
+        			           </div>\
+        			          <noscript>\
+        			            <div class="alertWarning">\
+        			              <p>JavaScript is disabled in your browser currently. Please enable JavaScript in your browser and try again.</p>\
+        			            </div>\
+        			          </noscript>\
+        			        </div>\
+        			      </div>\
+        			    </div>');
+        }
+        
+        function showDesktopPage()
+        {
+        	
+          	 document.write('<div class="loginBox"><div class="container1 wireBlock"> \
+        			 <div class="wrapper"><header><div class="logo"><img src="/ssologinext/images/horizontal-logo.png"></div> \
+        			 </header> <section><h1 class="loginTitle">Login to <span class="highlight">Continue</span></h1><p style="margin-top:-17px;"> \
+        			 Cookies must be enabled.</p></section></div></div><div class="container2 wireBlock"><div class="wrapper"><div class="loginForm"> \
+        			  \
+        			            <form NAME="Login" METHOD="POST" ACTION="/oam/server/auth_cred_submit">\
+        			            <INPUT name=action type=hidden value=login>\
+        			              <div class="formGroup">\
+        			                <label for="username">Username:</label>\
+        			                <input  autofocus class="formControl" type="text" name="username" id="username" style="border :1px solid #c3c3c3" />\
+        			              </div>\
+        			              <div class="formGroup">\
+        			                <label for="password">Password:</label>\
+        			                <input onKeyUp=doSubmit(event) id="password" name="password" type="password" class="formControl" style="border :1px solid #c3c3c3" />\
+        			              </div>\
+        			              <div>\
+        			                <input id="remUID" name="remUID" type="checkbox" value="1"  onclick="rememberUser();"> \
+        			                <label for="remUID">Remember username</label>\ \
+        			              </div>\
+        			              <input class="button" type="submit" value="Sign In" onclick="rememberUser();javascript:submitSearch(\'Login\'); return false;" style="margin-top: 18px;"> \
+        			              <div class="loginHelp">\
+        						  <p style="padding-bottom:10px"></p>\
+        			                <p>\
+        			                  <a href="https://mysupport.netapp.com/eservice/public/webreg/RemindMePassword.jsp">\
+        			                   Forgot username or password?\
+        			                  </a>\
+        			                </p>\
+        			              <p>\
+        			                  Not registered?\
+        			                  <a href="https://mysupport.netapp.com/eservice/public/now.do">\
+        			                    Sign up now!\
+        			                  </a>\
+        			                </p>\
+        			              </div>\
+        			              </form>\
+        			           </div>\
+        			          <noscript>\
+        			            <div class="alertWarning">\
+        			              <p>JavaScript is disabled in your browser currently. Please enable JavaScript in your browser and try again.</p>\
+        			            </div>\
+        			          </noscript>\
+        			        </div>\
+        			      </div>\
+        			    </div>');
+        			  
+
+        
+        
+        }
+        
+        
+        function showErrorPage()
+                {
+                                document.write('<div id="loginWrapper" align="center" style="margin:40px auto;background-image:url(/ssologinext/img/bg-logn-515x387.jpg);background-position: top left;background-repeat:no-repeat;width:385px;min-height:387px;padding:68px 60px 68px 70px;"><div id="loginLogo" style="float:left;width:62px;padding-right:30px;"> <a href="http://www.netapp.com" target="_blank"><img style="border:none;" src="/ssologinext/img/netapp-logo-62x73.jpg" width="62" height="73" alt="NetApp Logo"/></a></div><div id="loginBoxWrapper" style="float:left;width:288px;"><h3 style="margin:0;padding:26px 0 6px;font-size:15pt;font-weight:normal;">Forbidden Action</h3><div align="left" style="margin:0;font-family:Arial, Helvetica, sans-serif;font-size:12px; color:#454545;"><br/>You cant access SSO login page URL directly.<br/>Please use Application URL, you\'ll be eventually redirected to SSO login page.</div></div><div>');
+                }
+
+function defaultFocus() 
+{
+        var currPage = document.URL;
+        if(!((currPage=="https://signin-test.netapp.com/ssologinext/login.jsp")||(currPage=="http://vmwidmldap1-dev.corp.netapp.com:14100/ssologinext/login.jsp")||(currPage=="http://vmwidmldap2-dev.corp.netapp.com:14100/ssologinext/login.jsp")))
+        {
+                var persistUname = get_cookie ( "alwaysRemember" );
+                if (persistUname!=null)
+                {
+                        document.getElementById("remUID").checked = true;
+                        var codeElem = document.getElementById('username');
+                        codeElem.value = persistUname;
+                        document.forms[0].password.focus();
+                }
+                else
+                {
+                        document.forms[0].username.focus();
+                }
+        }
+}
+</SCRIPT>
+                                <noscript>
+                         <br/><br/><br/><br/><br/>
+                                <center>
+                                        <div class="label"><b>JavaScript is disabled in your browser currently.</b></div>
+                                        <div class="label"><b>Please Enable JavaScript in your Browser and Try again.</b></div>
+                </noscript>
+</body>
+</html>
